@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<!-- saved from url=(0082)file:///home/zechao/Descargas/VisualizadorRespuestaDisponibilidadHotelX%20(1).html -->
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+        <style>
+             #jsonTableExpected th {
+                padding-top: 12px;
+                padding-bottom: 12px;
+                text-align: left;
+                background-color: #4CAF50;
+                color: white;
+            }
+            #jsonTableExpected {
+                font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+                font-size: 11px;
+                border-collapse: collapse;
+                width: 100%;
+            }
+
+            #jsonTableExpected td, #jsonTableExpected th {
+                border: 1px solid #ddd;
+                padding: 8px;
+            }
+
+            #jsonTableExpected tr:nth-child(even) {
+                background-color: #f2f2f2;
+            }
+
+            #jsonTableExpected tr:hover {
+                background-color: #ddd;
+            }
+
+            #jsonTableResult th {
+                padding-top: 12px;
+                padding-bottom: 12px;
+                text-align: left;
+                background-color: #4CAF50;
+                color: white;
+            }
+
+            #jsonTableResult {
+                font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+                font-size: 11px;
+                border-collapse: collapse;
+                width: 100%;
+            }
+
+            #jsonTableResult td, #jsonTableResult th {
+                border: 1px solid #ddd;
+                padding: 8px;
+            }
+
+            #jsonTableResult tr:nth-child(even) {
+                background-color: #f2f2f2;
+            }
+
+            #jsonTableResult tr:hover {
+                background-color: #ddd;
+            }
+
+            #jsonTableResult th {
+                padding-top: 12px;
+                padding-bottom: 12px;
+                text-align: left;
+                background-color: #4CAF50;
+                color: white;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>JSON</h1>
+        <p>
+            <textarea rows="15" cols="80" type="textarea" id="setJsonE">Expected</textarea>
+            <textarea rows="15" cols="80" type="textarea" id="setJsonR">Result</textarea>
+        </p>
+        <p>
+            <button type="button" onclick="transformJson()">Transformar Json a Table</button>
+        </p>
+        <p id="printJson"></p>
+        <h2>Expected</h2>
+        <table id="jsonTableExpected"></table>
+        <h2>Result</h2>
+        <table id="jsonTableResult"></table>
+        <p></p>
+        <script>
+            function transformJson() {
+                printTable('setJsonE', 'jsonTableExpected');
+                printTable('setJsonR', 'jsonTableResult');
+            }
+
+            function printTable(tableName,rawName){
+                var obj_options_e = JSON.parse(document.getElementById(tableName).value);
+                obj_options_e.sort(function(a, b) {
+                    if (a.price.net == b.price.net) {
+                        if (a.boardCode == b.boardCode) {
+                            if (a.supplierCode == b.supplierCode) {
+                                return 0;
+                            }
+                            return a.supplierCode > b.supplierCode ? 1 : -1;
+                        }
+                        return a.boardCode > b.boardCode ? 1 : -1;
+                    }
+                    return a.price.net - b.price.net;
+                })
+                var table = document.getElementById(rawName);
+                while (table.hasChildNodes()) {
+                    table.removeChild(table.firstChild);
+                }
+                var tr_cell_title_optionId = document.createElement("TH");
+                var tr_cell_title_hotelCode = document.createElement("TH");
+                var tr_cell_title_supplierCode = document.createElement("TH");
+                var tr_cell_title_boardCode = document.createElement("TH");
+                var tr_cell_title_boardCodeSupplier = document.createElement("TH");
+                var tr_cell_title_roomCode = document.createElement("TH");
+                var tr_cell_title_roomSupplierCode = document.createElement("TH");
+                var tr_cell_title_roomDescription = document.createElement("TH");
+                var tr_cell_title_price_net = document.createElement("TH");
+                var tr_cell_title_price_gross = document.createElement("TH");
+                var tr_cell_title_rateRules = document.createElement("TH");
+                var tr_cell_title_ratePlans = document.createElement("TH");
+                var tr_cell_title_status = document.createElement("TH");
+                var tr_cell_title_binding = document.createElement("TH");
+
+                var tr_titles = table.insertRow();
+
+                var td_titles_optionId = tr_titles.appendChild(tr_cell_title_optionId);
+                td_titles_optionId.innerHTML = "option number";
+                var td_titles_hotelCode = tr_titles.appendChild(tr_cell_title_hotelCode);
+                td_titles_hotelCode.innerHTML = "hotelCode";
+                var td_titles_supplierCode = tr_titles.appendChild(tr_cell_title_supplierCode);
+                td_titles_supplierCode.innerHTML = "supplierCode";
+                var td_titles_boardCode = tr_titles.appendChild(tr_cell_title_boardCode);
+                td_titles_boardCode.innerHTML = "boardCode";
+
+                var td_titles_boardCodeSupplier = tr_titles.appendChild(tr_cell_title_boardCodeSupplier);
+                td_titles_boardCodeSupplier.innerHTML = "supplier boardCode";
+
+                var td_titles_roomCode = tr_titles.appendChild(tr_cell_title_roomCode);
+                td_titles_roomCode.innerHTML = "rooms code";
+                var td_titles_roomCode = tr_titles.appendChild(tr_cell_title_roomSupplierCode);
+                td_titles_roomCode.innerHTML = "rooms_supplierCode";
+                var td_titles_roomDescription = tr_titles.appendChild(tr_cell_title_roomDescription);
+                td_titles_roomDescription.innerHTML = "rooms description";
+                var td_titles_price_net = tr_titles.appendChild(tr_cell_title_price_net);
+                td_titles_price_net.innerHTML = "price net";
+                var td_titles_price_gross = tr_titles.appendChild(tr_cell_title_price_gross);
+                td_titles_price_gross.innerHTML = "price gross";
+                var td_titles_rateRules = tr_titles.appendChild(tr_cell_title_rateRules);
+                td_titles_rateRules.innerHTML = "rateRules";
+                var td_titles_ratePlans = tr_titles.appendChild(tr_cell_title_ratePlans);
+                td_titles_ratePlans.innerHTML = "ratePlans";
+                var td_titles_status = tr_titles.appendChild(tr_cell_title_status);
+                td_titles_status.innerHTML = "status";
+                var td_titles_binding = tr_titles.appendChild(tr_cell_title_binding);
+                td_titles_binding.innerHTML = "binding";
+
+                for (var i = 0; i < obj_options_e.length; i++) {
+                    var tr = table.insertRow();
+
+                    var td_optionId = tr.insertCell();
+                    td_optionId.innerHTML = i;
+
+                    var td_hotelCode = tr.insertCell();
+                    td_hotelCode.innerHTML = obj_options_e[i].hotelCode;
+
+                    var td_supplierCode = tr.insertCell();
+                    td_supplierCode.innerHTML = obj_options_e[i].supplierCode;
+
+                    var td_boardCode = tr.insertCell();
+                    td_boardCode.innerHTML = obj_options_e[i].boardCode;
+                    
+                    var td_supplierBoardCode = tr.insertCell();
+                    td_supplierBoardCode.innerHTML = obj_options_e[i].boardCodeSupplier;
+
+                    var td_roomCode = tr.insertCell();
+                    td_roomCode.innerHTML = obj_options_e[i].rooms[0].code;
+                   
+                    var td_supplierRoomCode = tr.insertCell();
+                    td_supplierRoomCode.innerHTML = obj_options_e[i].rooms[0].supplierCode; 
+
+                    var td_roomDescription = tr.insertCell();
+                    td_roomDescription.innerHTML = obj_options_e[i].rooms[0].description; 
+
+                    var td_price_net = tr.insertCell();
+                    var obj_price_net = JSON.stringify(obj_options_e[i].price.net);
+                    var converted_net_comma_to_point = obj_price_net.replace(".", ",");
+                    td_price_net.innerHTML = converted_net_comma_to_point;
+
+                    var td_price_gross = tr.insertCell();
+                    var obj_price_gross = JSON.stringify(obj_options_e[i].price.gross);
+                    var converted_gross_comma_to_point = obj_price_gross.replace(".", ",");
+                    td_price_gross.innerHTML = converted_gross_comma_to_point;
+
+                    var td_rateRules = tr.insertCell();
+                    td_rateRules.innerHTML = obj_options_e[i].rateRules;
+
+                    var td_ratePlans = tr.insertCell();
+                    td_ratePlans.innerHTML = obj_options_e[i].rooms[0].ratePlans;
+
+                    var td_status = tr.insertCell();
+                    td_status.innerHTML = obj_options_e[i].status;
+
+                    var td_binding = tr.insertCell();
+                    td_binding.innerHTML = obj_options_e[i].price.binding;
+
+                }
+            }
+        </script>
+    </body>
+</html>
