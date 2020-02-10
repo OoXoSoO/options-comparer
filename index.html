@@ -121,6 +121,7 @@
                 var tr_cell_title_ratePlans = document.createElement("TH");
                 var tr_cell_title_status = document.createElement("TH");
                 var tr_cell_title_binding = document.createElement("TH");
+                var tr_cell_title_paymentType = document.createElement("TH");
 
                 var tr_titles = table.insertRow();
 
@@ -154,7 +155,9 @@
                 td_titles_status.innerHTML = "status";
                 var td_titles_binding = tr_titles.appendChild(tr_cell_title_binding);
                 td_titles_binding.innerHTML = "binding";
-
+                var td_titles_paymentType = tr_titles.appendChild(tr_cell_title_paymentType);
+                td_titles_paymentType.innerHTML = "paymentType";
+                
                 for (var i = 0; i < obj_options_e.length; i++) {
                     var tr = table.insertRow();
 
@@ -204,6 +207,9 @@
                     var td_binding = tr.insertCell();
                     td_binding.innerHTML = obj_options_e[i].price.binding;
 
+                    var td_paymentType = tr.insertCell();
+                    td_paymentType.innerHTML = obj_options_e[i].paymentType;
+                    
                 }
             }
         </script>
